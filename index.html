@@ -164,12 +164,25 @@
 							in dem wird der Microcontroller gestarted
 
 							void setup() {
-								Heltec.begin(true /*DisplayEnable Enable*/, //Dispaly kann genutzt werden
+								Heltec.begin(true /*DisplayEnable Enable*/, //Display verwendbar
 										false /*LoRa Disable*/, 
 										true /*Serial Enable*/); //Meldungen für Fehlerbehebung
 							}
 						</section>
+						<section>
+							Das Display wird aktiviert und die Schriftart festgelegt
 
+							Heltec.display->init(); //Starte den Bildschirm
+							Heltec.display->setFont(ArialMT_Plain_10); //Schriftart
+						</section>
+						<section>
+							Die erste Nutzung des Bildschirms zum testen <br>
+							Dabei wird erst vorgegeben, was gemacht werden soll und in der nächsten Zeile der Bildschirm aktualisiert
+
+							//Schreibe "Hello, I'm happy today"
+							Heltec.display->drawString(0, 0, "Hello, I'm happy today");
+							Heltec.display->display(); //aktualisiere den Bildschirm
+						</section>
 					</textarea>
 				</section>
 				<section data-markdown>
