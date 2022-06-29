@@ -8,6 +8,7 @@
 
 		<link rel="stylesheet" href="dist/reset.css">
 		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/custom.css">
 		<link rel="stylesheet" href="dist/theme/sky.css">
 
 		<!-- Theme used for syntax highlighted code -->
@@ -257,17 +258,31 @@
 							  }
 						</Section>
 						<section>
-							Natürlich brauchen wir erstmalig
+							Natürlich brauchen wir erstmal einen Platz für das dauerhaft laufende Programm
 
 							void loop() {
 								...
 							}
 						</section>
 						<section>
-							
+							Als erste Aktion bei einer Wiederholung muss überprüft werden, ob der Button gedrückt wird.
+							<br>Damit wird gesehen ob der Mensch etwas will
 
+							 ...
 							// lese den Button
 							int buttonState = digitalRead(pushButton);
+							 ...
+						</section>
+						<section>
+							
+							 ...
+							Heltec.display->clear();
+							Heltec.display->drawString(0,0,"Drücke PRG zum Starten");
+							if(durchschnitt != 0) {
+								Heltec.display->drawString(0,20, "durchschnittliche Zeit: " + String(durchschnitt));
+							}
+							Heltec.display->display();
+							 ...
 						</section>
 					</textarea>
 				</section>
