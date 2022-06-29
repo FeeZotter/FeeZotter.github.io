@@ -220,12 +220,12 @@
 								int buttonState = digitalRead(pushButton);
 								Heltec.display->clear();
 								Heltec.display->drawString(0,0,"Drücke PRG zum Starten");
-								if(durchschnitt != 0) {
+								wenn(durchschnitt != 0) {
 									Heltec.display->drawString(0,20, "durchschnittliche Zeit: " + String(durchschnitt));
 								}
 								Heltec.display->display();
 								//hier started der Reaktionstest
-								if(buttonState == 0)
+								wenn(buttonState == 0)
 								{
 								  während(zähler < 5)
 								  {
@@ -233,7 +233,7 @@
 									Heltec.display->drawString(0,0, "drücke bei weißer LED");
 									Heltec.display->display();
 									warte(zufällig(1000, 5000)); 
-									digitalWrite(25, 1);  // sets the digital pin 25 on
+									digitalWrite(25, 1);  // schaltet das Lämpchen an
 									spielLäuft = true;
 									timerStart1 = millis();
 									während(spielLäuft)
@@ -241,13 +241,13 @@
 									  Heltec.display->clear();
 									  Heltec.display->drawString(0,0, "Versuch " + String(zähler+1));
 									  Heltec.display->drawString(0,20, String(millis() - timerStart1));
-									  if(digitalRead(pushButton) == 0)
+									  Heltec.display->display();
+									  wenn(digitalRead(pushButton) == 0)
 									  {
 										spielLäuft = false;
 										ergebnisListe[zähler] = millis() - timerStart1;
-										digitalWrite(25, 0);  // sets the sdigital pin 25 off
-									  }
-									  Heltec.display->display();
+										digitalWrite(25, 0);  // schaltet die Lampe aus
+									  }  
 									}
 									warte(1000);
 									zähler++;
@@ -274,7 +274,9 @@
 							 ...
 						</section>
 						<section>
-							
+							DISCLAIMER: wenn dieser Text hier noch steht war ich nicht schnell genug
+							<br>Für Erklärung bitte an die Schüler wenden
+
 							 ...
 							Heltec.display->clear();
 							Heltec.display->drawString(0,0,"Drücke PRG zum Starten");
@@ -282,6 +284,99 @@
 								Heltec.display->drawString(0,20, "durchschnittliche Zeit: " + String(durchschnitt));
 							}
 							Heltec.display->display();
+							 ...
+						</section>
+						<section>
+							DISCLAIMER: wenn dieser Text hier noch steht war ich nicht schnell genug
+							<br>Für Erklärung bitte an die Schüler wenden
+							
+							//hier started der Reaktionstest
+							wenn(buttonState == 0) {
+								...
+							}	
+						</section>
+						<section>
+							DISCLAIMER: wenn dieser Text hier noch steht war ich nicht schnell genug
+							<br>Für Erklärung bitte an die Schüler wenden
+
+							während(zähler < 5) {
+								...
+							}
+						</section>
+						<section>
+							DISCLAIMER: wenn dieser Text hier noch steht war ich nicht schnell genug
+							<br>Für Erklärung bitte an die Schüler wenden
+
+							 ...
+							Heltec.display->clear();
+							Heltec.display->drawString(0,0, "drücke bei weißer LED");
+							Heltec.display->display();
+							 ...
+						</section>
+						<section>
+							DISCLAIMER: wenn dieser Text hier noch steht war ich nicht schnell genug
+							<br>Für Erklärung bitte an die Schüler wenden
+
+							 ...
+							warte(zufällig(1000, 5000)); 
+							digitalWrite(25, 1);  // schaltet das Lämpchen an
+							spielLäuft = true;
+							timerStart1 = millis();
+							 ...
+						</section>
+						<section>
+							DISCLAIMER: wenn dieser Text hier noch steht war ich nicht schnell genug
+							<br>Für Erklärung bitte an die Schüler wenden
+
+							während(spielLäuft) {
+								...
+							}
+						</section>
+						<section>
+							DISCLAIMER: wenn dieser Text hier noch steht war ich nicht schnell genug
+							<br>Für Erklärung bitte an die Schüler wenden
+
+							 ...
+							Heltec.display->clear();
+							Heltec.display->drawString(0,0, "Versuch " + String(zähler+1));
+							Heltec.display->drawString(0,20, String(millis() - timerStart1));
+							Heltec.display->display();
+							 ...
+						</section>
+						<section>
+							DISCLAIMER: wenn dieser Text hier noch steht war ich nicht schnell genug
+							<br>Für Erklärung bitte an die Schüler wenden
+
+							wenn(digitalRead(pushButton) == 0) {
+								...
+							}
+						</section>
+						<section>
+							DISCLAIMER: wenn dieser Text hier noch steht war ich nicht schnell genug
+							<br>Für Erklärung bitte an die Schüler wenden
+
+							 ...
+							spielLäuft = false;
+							ergebnisListe[zähler] = millis() - timerStart1;
+							digitalWrite(25, 0);  // schaltet die Lampe aus
+							 ...
+						</section>
+						<section>
+							DISCLAIMER: wenn dieser Text hier noch steht war ich nicht schnell genug
+							<br>Für Erklärung bitte an die Schüler wenden
+
+							 ...
+							warte(1000);
+							zähler++;
+							 ...
+						</section>
+						<section>
+							DISCLAIMER: wenn dieser Text hier noch steht war ich nicht schnell genug
+							<br>Für Erklärung bitte an die Schüler wenden
+
+							 ...
+							zähler = 0;
+							durchschnitt = (ergebnisListe[0] + ergebnisListe[1] + ergebnisListe[2] + ergebnisListe[3] + ergebnisListe[4])/5;
 							 ...
 						</section>
 					</textarea>
