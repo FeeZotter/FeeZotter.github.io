@@ -161,12 +161,15 @@
 							}
 						</section>
 						<section>
-							Nun wird Microcontroller gestarted
+							in dem wird der Microcontroller gestarted
 
-							Heltec.begin(true /*DisplayEnable Enable*/, 
+							void setup() {
+								Heltec.begin(true /*DisplayEnable Enable*/, //Dispaly kann genutzt werden
 										false /*LoRa Disable*/, 
-										true /*Serial Enable*/);
+										true /*Serial Enable*/); //Meldungen für Fehlerbehebung
+							}
 						</section>
+
 					</textarea>
 				</section>
 				<section data-markdown>
