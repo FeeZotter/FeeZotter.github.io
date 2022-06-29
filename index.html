@@ -24,7 +24,9 @@
 							Navigiere mit ⇚ ⤊ ⟱ ⇛ und ⎵
 					  	</section>
 					  	<section>
-							Auf den folgenden Folien wird der Code Schritt für schritt erklärt
+							Auf den folgenden Folien wird der Code Schritt für schritt erklärt <br><br>
+							ESC ⇛ übersichtliche Karte <br>
+							V ⇛ Pause
 						</section>
 					</textarea>
 				</section>
@@ -32,15 +34,16 @@
 					<textarea data-template>
 						<section data-markdown id="Importe">
 							<h2>Was sind Importe?</h2>
-							Importe erweitern die verfügbaren Funktionen des Programmierer um schnellere und einfachere Lösungen zu bieten
-							<br>Durch "Arduino.h" kann man einfach den Bildschirm steuern ohne viel Lernen und Coden
+							Importe erweitern die verfügbaren Funktionen des Programmierer um schnellere und einfachere Lösungen zu bieten.
+							<br>Durch "Arduino.h" kann man einfach den Bildschirm steuern ohne viel Lernen und Coden.
 						
 							#include "Arduino.h"
 							#include "heltec.h"
 						</section>
 						<section id="Variablen">
 							<h2>Was sind Variablen?</h2>
-							Einfache Daten wie eine Zahl oder ein Text werden als sogenannte (primitive) Variablen erstellt mit denen das Programm arbeiten kann
+							Einfache Daten wie eine Zahl oder ein Text werden als sogenannte (primitive) Variablen erstellt.
+							<br>Mit denen kann das Programm arbeiten.
 
 							int ganzeZahl = 0; //erstellung von ganzeZahl mit dem Wert 0
 							ganzeZahl = ganzeZahl + 1; ///ganzeZahl wird plus 1 gerechnet
@@ -48,9 +51,9 @@
 						</section>
 						<section id="Setup">
 							<h2>Was ist setup()?</h2>
-							Hier wird das Programm EINMAL AM ANFANG vorbereitet<br>
-							In die runden Klammern werden benötigte Variablen eingetragen
-							<br>in den geschweiften Klammern ist der Code drin
+							Hier wird das Programm EINMAL AM ANFANG vorbereitet.<br>
+							In die runden Klammern werden benötigte Variablen eingetragen.
+							<br>in den geschweiften Klammern ist der Code drin.
 							
 							void setup(ganzeZahl) { //setup beginnt und benötigt eine Zahl
 								Heltec.begin(); //System started
@@ -62,8 +65,8 @@
 						</section>
 						<section id="Loop">
 							<h2>Was ist loop()?</h2>
-							Hier wird Code so lange ausgeführt bis das System abgeschalten ist<br>
-							Auch hier kommen Variablen in die runden Klammern und der Code in die geschweiften
+							Hier wird Code so lange ausgeführt bis das System abgeschalten ist.<br>
+							Auch hier kommen Variablen in die runden Klammern und der Code in die geschweiften.
 
 							void loop() {
 								int buttonStatus = digitalRead(pushButton); //Status des Buttons
@@ -106,9 +109,9 @@
 							int zähler = 0; //hier werden die Versuche gezählt
 						</Section>
 						<section>
-							Den Button den wir sehen wollen hat die ID von 0
+							Den Button den wir sehen wollen hat die ID von 0.
 							<br>
-							<br>Also setzen wir im Code eine Variable um die Zahl nicht merken zu müssen oder einfach ändern zu können
+							<br>Also setzen wir im Code eine Variable um die Zahl nicht merken zu müssen oder einfach ändern zu können.
 							<br><br>
 
 							int pushButton = 0; //Button zum Überwachen
@@ -124,17 +127,17 @@
 							 ...
 						</section>
 						<section>
-							Die Zeit muss aufgezeichnet werden<br>
-							Dafür brauchen wir nur die Startzeit <br>
+							Die Zeit muss aufgezeichnet werden.<br>
+							Dafür brauchen wir nur die Startzeit. <br>
 
 							 ...
 							unsigned long timerStart1 = 0; //hier wird die Startzeit gespeichert
 							 ...
 						</section>
 						<section>
-							Das einzige das Fehlt sind Werte um zu sehen ob das Spiel läuft <br>
-							Ein Wahrheitswert (Wahr/falsch) um zu sehen ob das Spiel läuft oder nicht <br>
-							Und ein zähler für die 5 Runden
+							Das einzige das Fehlt sind Werte um zu sehen ob das Spiel läuft. <br>
+							Ein Wahrheitswert (Wahr/falsch) um zu sehen ob das Spiel läuft oder nicht. <br>
+							Und einen Zähler für die 5 Runden.
 
 							 ...
 							bool spielLäuft = true; //hier wird gesehen ob das Spiel läuft
@@ -188,8 +191,8 @@
 							 ...
 						</section>
 						<section>
-							Die erste Nutzung des Bildschirms zum testen <br>
-							Dabei wird erst vorgegeben, was gemacht werden soll und in der nächsten Zeile der Bildschirm aktualisiert
+							Die erste Nutzung des Bildschirms zum testen. <br>
+							Dabei wird erst vorgegeben, was gemacht werden soll und in der nächsten Zeile der Bildschirm aktualisiert.
 
 							 ...
 							//Schreibe "Hallo Welt"
@@ -198,8 +201,8 @@
 							 ...
 						</section>
 						<section>
-							Mit pinMode() wird ein Anschluss angeschalten und als eingang oder Ausgang gesetzt
-							<br>'pushButton' hat als Variable den Wert 0, also wird der Anschluss 0 als Eingang gesetzt
+							Mit pinMode() wird ein Anschluss angeschalten und als eingang oder Ausgang gesetzt.
+							<br>'pushButton' hat als Variable den Wert 0, also wird der Anschluss 0 als Eingang gesetzt.
 							
 							 ...
 							//setze den Anschluss pushButton als Eingang
@@ -266,7 +269,7 @@
 						</section>
 						<section>
 							Als erste Aktion bei einer Wiederholung muss überprüft werden, ob der Button gedrückt wird.
-							<br>Damit wird gesehen ob der Mensch etwas will
+							<br>Damit wird gesehen ob der Mensch etwas will.
 
 							 ...
 							// lese den Button
@@ -287,8 +290,7 @@
 							 ...
 						</section>
 						<section>
-							DISCLAIMER: wenn dieser Text hier noch steht war ich nicht schnell genug
-							<br>Für Erklärung bitte an die Schüler wenden
+							Wenn der Button gedrückt wurde started der Test
 							
 							//hier started der Reaktionstest
 							wenn(buttonState == 0) {
@@ -296,8 +298,7 @@
 							}	
 						</section>
 						<section>
-							DISCLAIMER: wenn dieser Text hier noch steht war ich nicht schnell genug
-							<br>Für Erklärung bitte an die Schüler wenden
+							Mit dieser Abfrage wird überprüft ob die Runden moch Laufen. <br>Wir haben 5 Runden und am Zähler wird es gemessen
 
 							während(zähler < 5) {
 								...
@@ -325,8 +326,8 @@
 							 ...
 						</section>
 						<section>
-							DISCLAIMER: wenn dieser Text hier noch steht war ich nicht schnell genug
-							<br>Für Erklärung bitte an die Schüler wenden
+							Dies ist für einen Testlauf. <br>
+							Sobald der Test vorbei ist, kann es in die nächste Runde
 
 							während(spielLäuft) {
 								...
@@ -344,8 +345,7 @@
 							 ...
 						</section>
 						<section>
-							DISCLAIMER: wenn dieser Text hier noch steht war ich nicht schnell genug
-							<br>Für Erklärung bitte an die Schüler wenden
+							Sobald der Mensch nun den Button drückt wird der Testlauf beendet
 
 							wenn(digitalRead(pushButton) == 0) {
 								...
