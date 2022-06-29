@@ -165,8 +165,8 @@
 
 							void setup() {
 								Heltec.begin(true /*DisplayEnable Enable*/, //Display verwendbar
-										false /*LoRa Disable*/, 
-										true /*Serial Enable*/); //Meldungen für Fehlerbehebung
+											false /*LoRa Disable*/, 
+											true /*Serial Enable*/); //Meldungen für Fehlerbehebung
 							}
 						</section>
 						<section>
@@ -182,6 +182,14 @@
 							//Schreibe "Hello, I'm happy today"
 							Heltec.display->drawString(0, 0, "Hello, I'm happy today");
 							Heltec.display->display(); //aktualisiere den Bildschirm
+						</section>
+						<section>
+							Mit pinMode() wird ein Anschluss angeschalten und als eingang oder Ausgang gesetzt
+							<br>'pushButton' hat als Variable den Wert 0, also wird der Anschluss 0 als Eingang gesetzt
+							
+							//setze den Anschluss pushButton als Eingang
+							pinMode(pushButton, INPUT); 
+							pinMode(25, OUTPUT); //setze den Anschluss 25 als Ausgang
 						</section>
 					</textarea>
 				</section>
