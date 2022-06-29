@@ -99,10 +99,10 @@
 							
 							int pushButton = 0; //Button zum Überwachen
 							unsigned long timerStart1 = 0; //hier wird die Startzeit gespeichert
-							boolean gameRuns = true; //hier wird gesehen ob das Spiel läuft
-							unsigned long resultArray[5]; //für die 5 Zwischenergebnisse
-							unsigned long averageTime = 0; //hier das Komplettergebnis
-							int counter = 0; //hier werden die Versuche gezählt
+							bool spielLäuft = true; //hier wird gesehen ob das Spiel läuft
+							unsigned long ergebnisListe[5]; //für die 5 Zwischenergebnisse
+							unsigned long durchschnitt = 0; //hier das Komplettergebnis
+							int zähler = 0; //hier werden die Versuche gezählt
 						</Section>
 						<section>
 							Den Button den wir sehen wollen hat die ID von 0
@@ -111,27 +111,33 @@
 							<br><br>
 
 							int pushButton = 0; //Button zum Überwachen
+							...
 
 						</section>
 						<section>
 							Dann brauchen wir noch für die 5 Ergebnisse einen Zwischenspeicher und eins für das Gesammtergebnis
 
-							unsigned long resultArray[5]; //für die 5 Zwischenergebnisse
-							unsigned long averageTime = 0; //hier das Komplettergebnis
+							...
+							unsigned long ergebnisListe[5]; //für die 5 Zwischenergebnisse
+							unsigned long durchschnitt = 0; //hier das Komplettergebnis
+							...
 						</section>
 						<section>
 							Die Zeit muss aufgezeichnet werden<br>
 							Dafür brauchen wir nur die Startzeit
 
+							...
 							unsigned long timerStart1 = 0; //hier wird die Startzeit gespeichert
+							...
 						</section>
 						<section>
 							Das einzige das Fehlt sind Werte um zu sehen ob das Spiel läuft <br>
 							Ein Wahrheitswert (Wahr/falsch) um zu sehen ob das Spiel läuft oder nicht <br>
-							Und ein Counter für die 5 Runden
+							Und ein zähler für die 5 Runden
 
-							boolean gameRuns = true; //hier wird gesehen ob das Spiel läuft
-							int counter = 0; //hier werden die Versuche gezählt
+							...
+							bool spielLäuft = true; //hier wird gesehen ob das Spiel läuft
+							int zähler = 0; //hier werden die Versuche gezählt
 						</section>
 					</textarea>
 				</section>
@@ -143,15 +149,17 @@
 							
 							void setup() {
 								//Starte den Microcontroller
-								Heltec.begin(true /*DisplayEnable Enable*/, false /*LoRa Disable*/, true /*Serial Enable*/);
+								Heltec.begin(true /*DisplayEnable An*/, //Display verwendbar
+											false /*LoRa Aus*/, 
+											true /*Serial An*/); //Meldungen für Fehlerbehebung
 								Heltec.display->init(); //Starte den Bildschirm
 								Heltec.display->setFont(ArialMT_Plain_10); //Schriftart
-								//Schreibe "Hello, I'm happy today"
-								Heltec.display->drawString(0, 0, "Hello, I'm happy today");
+								//Schreibe "Hallo Welt"
+								Heltec.display->drawString(0, 0, "Hallo Welt");
 								Heltec.display->display(); //aktualisiere den Bildschirm
 								//setze den Anschluss pushButton als Eingang
-								pinMode(pushButton, INPUT); 
-								pinMode(25, OUTPUT); //setze den Anschluss 25 als Ausgang
+								pinMode(pushButton, EINGANG); 
+								pinMode(25, AUSGANG); //setze den Anschluss 25 als Ausgang
 							}
 						</Section>
 						<section>
@@ -165,9 +173,9 @@
 							in dem wird der Microcontroller gestarted
 
 							void setup() {
-								Heltec.begin(true /*DisplayEnable Enable*/, //Display verwendbar
-											false /*LoRa Disable*/, 
-											true /*Serial Enable*/); //Meldungen für Fehlerbehebung
+								Heltec.begin(true /*DisplayEnable An*/, //Display verwendbar
+											false /*LoRa Aus*/, 
+											true /*Serial An*/); //Meldungen für Fehlerbehebung
 							}
 						</section>
 						<section>
@@ -189,8 +197,8 @@
 							<br>'pushButton' hat als Variable den Wert 0, also wird der Anschluss 0 als Eingang gesetzt
 							
 							//setze den Anschluss pushButton als Eingang
-							pinMode(pushButton, INPUT); 
-							pinMode(25, OUTPUT); //setze den Anschluss 25 als Ausgang
+							pinMode(pushButton, EINGANG); 
+							pinMode(25, AUSGANG); //setze den Anschluss 25 als Ausgang
 						</section>
 					</textarea>
 				</section>
@@ -202,49 +210,51 @@
 							Gesammter Code:
 							
 							void loop() {
-								// read the input pin:
+								// lese den Button
 								int buttonState = digitalRead(pushButton);
 								Heltec.display->clear();
 								Heltec.display->drawString(0,0,"Drücke PRG zum Starten");
-								if(averageTime != 0){Heltec.display->drawString(0,20, "durchschnittliche Zeit: " + String(averageTime));}
+								if(durchschnitt != 0) {
+									Heltec.display->drawString(0,20, "durchschnittliche Zeit: " + String(durchschnitt));
+								}
 								Heltec.display->display();
-								//here starts the Game
+								//hier started
 								if(buttonState == 0)
 								{
-								  while(counter < 5)
+								  while(zähler < 5)
 								  {
 									Heltec.display->clear();
 									Heltec.display->drawString(0,0, "drücke bei weißer LED");
 									Heltec.display->display();
-									delay(random(1000, 5000)); 
+									warte(zufällig(1000, 5000)); 
 									digitalWrite(25, 1);  // sets the digital pin 25 on
-									gameRuns = true;
+									spielLäuft = true;
 									timerStart1 = millis();
-									while(gameRuns)
+									while(spielLäuft)
 									{
 									  Heltec.display->clear();
-									  Heltec.display->drawString(0,0, "Versuch " + String(counter+1));
+									  Heltec.display->drawString(0,0, "Versuch " + String(zähler+1));
 									  Heltec.display->drawString(0,20, String(millis() - timerStart1));
 									  if(digitalRead(pushButton) == 0)
 									  {
-										gameRuns = false;
-										resultArray[counter] = millis() - timerStart1;
+										spielLäuft = false;
+										ergebnisListe[zähler] = millis() - timerStart1;
 										digitalWrite(25, 0);  // sets the sdigital pin 25 off
 									  }
 									  Heltec.display->display();
 									}
-									delay(1000);
-									counter++;
+									warte(1000);
+									zähler++;
 								  }
-								  counter = 0;
-								  averageTime = (resultArray[0] + resultArray[1] + resultArray[2] + resultArray[3] + resultArray[4])/5;
+								  zähler = 0;
+								  durchschnitt = (ergebnisListe[0] + ergebnisListe[1] + ergebnisListe[2] + ergebnisListe[3] + ergebnisListe[4])/5;
 								}
 							  }
 						</Section>
 						<section>
 							
 
-							// read the input pin:
+							// lese den Button
 							int buttonState = digitalRead(pushButton);
 						</section>
 					</textarea>
