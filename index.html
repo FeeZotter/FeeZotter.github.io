@@ -31,14 +31,15 @@
 					<textarea data-template>
 						<section data-markdown id="Importe">
 							<h2>Was sind Importe?</h2>
-							Importe stellen dem Programmierer einfache Lösungen zur Kontrolle z.B. des Bildschirmes
+							Importe erweitern die verfügbaren Funktionen des Programmierer um schnellere und einfachere Lösungen zu bieten
+							<br>Durch "Arduino.h" kann man einfach den Bildschirm steuern ohne viel Lernen und Coden
 						
 							#include "Arduino.h"
 							#include "heltec.h"
 						</section>
 						<section id="Variablen">
 							<h2>Was sind Variablen?</h2>
-							Einfache Daten wie eine Zahl oder ein Text werden als sogenannte Variablen erstellt mit denen das Programm arbeiten kann
+							Einfache Daten wie eine Zahl oder ein Text werden als sogenannte (primitive) Variablen erstellt mit denen das Programm arbeiten kann
 
 							int ganzeZahl = 0; //erstellung von ganzeZahl mit dem Wert 0
 							ganzeZahl = ganzeZahl + 1; ///ganzeZahl wird plus 1 gerechnet
@@ -96,7 +97,7 @@
 						<Section>
 							Gesammter Code: 
 							
-							int pushButton = 0; //Button zum überwachen
+							int pushButton = 0; //Button zum Überwachen
 							unsigned long timerStart1 = 0; //hier wird die Startzeit gespeichert
 							boolean gameRuns = true; //hier wird gesehen ob das Spiel läuft
 							unsigned long resultArray[5]; //für die 5 Zwischenergebnisse
@@ -109,7 +110,7 @@
 							<br>Also setzen wir im Code eine Variable um die Zahl nicht merken zu müssen oder einfach ändern zu können
 							<br><br>
 
-							int pushButton = 0; //Button zum überwachen
+							int pushButton = 0; //Button zum Überwachen
 
 						</section>
 						<section>
@@ -198,7 +199,7 @@
 						<h2>loop(){}</h2>
 						<Section>
 							<br>
-							Gesammter Code: <br> (Pfeil Runter für Erklärung)
+							Gesammter Code:
 							
 							void loop() {
 								// read the input pin:
@@ -239,8 +240,13 @@
 								  averageTime = (resultArray[0] + resultArray[1] + resultArray[2] + resultArray[3] + resultArray[4])/5;
 								}
 							  }
-							  
 						</Section>
+						<section>
+							
+
+							// read the input pin:
+							int buttonState = digitalRead(pushButton);
+						</section>
 					</textarea>
 				</section>
 			</div>
