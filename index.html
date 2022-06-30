@@ -216,7 +216,8 @@
 						<h2>loop()</h2>
 						<Section>
 							<br>
-							Gesammter Loop Code:
+							Gesammter Loop Code: <br>
+							Empfehlug: mit Microcontroller lernen
 							
 							void loop() {
 								// lese den Button
@@ -277,17 +278,31 @@
 							 ...
 						</section>
 						<section>
-							DISCLAIMER: wenn dieser Text hier noch steht war ich nicht schnell genug
-							<br>Für Erklärung bitte an die Schüler wenden
+							Erstmal wird der Inhalt des Bildschirmes gelöscht. <br>
+							Dann wird eine Startnachricht geschrieben. <br>
+							Wenn es ein Ergebnis gibt, dann wird es auch angezeigt.
 
 							 ...
 							Heltec.display->clear();
 							Heltec.display->drawString(0,0,"Drücke PRG zum Starten");
-							if(durchschnitt != 0) {
+							wenn(durchschnitt != 0) {
 								Heltec.display->drawString(0,20, "durchschnittliche Zeit: " + String(durchschnitt));
 							}
 							Heltec.display->display();
 							 ...
+						</section>
+						<section>
+							Rückblick:
+							Der Button wird gelesen und der Startbildschirm angezeigt
+
+							// lese den Button
+							int buttonState = digitalRead(pushButton);
+							Heltec.display->clear();
+							Heltec.display->drawString(0,0,"Drücke PRG zum Starten");
+							wenn(durchschnitt != 0) {
+								Heltec.display->drawString(0,20, "durchschnittliche Zeit: " + String(durchschnitt));
+							}
+							Heltec.display->display();
 						</section>
 						<section>
 							Wenn der Button gedrückt wurde started der Test
@@ -298,15 +313,14 @@
 							}	
 						</section>
 						<section>
-							Mit dieser Abfrage wird überprüft ob die Runden moch Laufen. <br>Wir haben 5 Runden und am Zähler wird es gemessen
+							Mit dieser Abfrage wird überprüft ob die Runden moch Laufen. <br>Sobald 5 runden erreicht würden wird der Test beendet.
 
 							während(zähler < 5) {
 								...
 							}
 						</section>
 						<section>
-							DISCLAIMER: wenn dieser Text hier noch steht war ich nicht schnell genug
-							<br>Für Erklärung bitte an die Schüler wenden
+							Die Anzeige wird mit einer Aufforderung aktualisiert
 
 							 ...
 							Heltec.display->clear();
@@ -315,8 +329,9 @@
 							 ...
 						</section>
 						<section>
-							DISCLAIMER: wenn dieser Text hier noch steht war ich nicht schnell genug
-							<br>Für Erklärung bitte an die Schüler wenden
+							Das Programm warted zwischen 1000 und 5000 Millisekunden (1 bis 5 Sekunden). <br>
+							Anschließend wird das Weiße licht angeschalten und der Test vorbereitet. <br>
+							In den Timer wird die Startzeit eingespeichert.
 
 							 ...
 							warte(zufällig(1000, 5000)); 
@@ -327,43 +342,68 @@
 						</section>
 						<section>
 							Dies ist für einen Testlauf. <br>
-							Sobald der Test vorbei ist, kann es in die nächste Runde
+							Wenn der Test erfogreich vorbereitet wurde geht es weiter
 
 							während(spielLäuft) {
 								...
 							}
 						</section>
 						<section>
-							DISCLAIMER: wenn dieser Text hier noch steht war ich nicht schnell genug
-							<br>Für Erklärung bitte an die Schüler wenden
+							Ein Test wurde erfolgreich gestarted und erstmal wird dem Menschen gezeigt welcher Versuch und wie viel Zeit bisher vergangen ist
 
 							 ...
 							Heltec.display->clear();
-							Heltec.display->drawString(0,0, "Versuch " + String(zähler+1));
+							//+1 weil Listen mit 0 beginnen, aber Menschen denken es beginne mit 1
+							Heltec.display->drawString(0,0, "Versuch " + String(zähler+1)); 
+							// ZeitJetzt(millis()) minus timerStart1 ist die bisher vergangene Zeit
 							Heltec.display->drawString(0,20, String(millis() - timerStart1));
 							Heltec.display->display();
 							 ...
 						</section>
 						<section>
-							Sobald der Mensch nun den Button drückt wird der Testlauf beendet
+							Sobald der Mensch nun den Button drückt wird das beenden eingeleited. <br>
+							Es muss am abschluss noch ein wenig berechnet werden.
 
 							wenn(digitalRead(pushButton) == 0) {
 								...
 							}
 						</section>
 						<section>
-							DISCLAIMER: wenn dieser Text hier noch steht war ich nicht schnell genug
-							<br>Für Erklärung bitte an die Schüler wenden
+							Das Testende wird gesetzt, die vergangene Zeit eingespeichert und das Licht ausgemacht.
 
 							 ...
+							//Test ist zu ende
 							spielLäuft = false;
 							ergebnisListe[zähler] = millis() - timerStart1;
 							digitalWrite(25, 0);  // schaltet die Lampe aus
 							 ...
 						</section>
 						<section>
-							DISCLAIMER: wenn dieser Text hier noch steht war ich nicht schnell genug
-							<br>Für Erklärung bitte an die Schüler wenden
+							Rückblick: (einfache Fassung)
+
+							//so lange keine 5 Runden vergangen sind
+							während(zähler < 5)
+							{
+							  SAGE "drücke bei weißer LED");
+							  warte(zufällig(1000, 5000)); 
+							  Schalte Lampe ein;
+							  spielLäuft = true;
+							  Startpunkt wird gespeichert;
+							  während(spielLäuft)
+							  {
+								SAGE "Versuch " + String(zähler+1);
+								Heltec.display->drawString(0,20, String(millis() - timerStart1));
+								Heltec.display->display();
+								wenn(digitalRead(pushButton) == 0)
+								{
+								  spielLäuft = false;
+								  ergebnisListe[zähler] = millis() - timerStart1;
+								  digitalWrite(25, 0);  // schaltet die Lampe aus
+								}  
+							  }
+						</section>
+						<section>
+							Hier kommt das Programm hin sobald die 5 durchläufe geglückt sind.
 
 							 ...
 							warte(1000);
