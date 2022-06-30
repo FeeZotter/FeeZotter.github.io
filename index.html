@@ -34,8 +34,8 @@
 					<textarea data-template>
 						<section data-markdown id="Importe">
 							<h2>Was sind Importe?</h2>
-							Importe erweitern die verfügbaren Funktionen des Programmierer um schnellere und einfachere Lösungen zu bieten.
-							<br>Durch "Arduino.h" kann man einfach den Bildschirm steuern ohne viel Lernen und Coden.
+							Importe erweitern die verfügbaren Funktionen des Programmes um schnellere und einfachere Lösungen zu bieten.
+							<br>Durch "Arduino.h" können wir einfach den Bildschirm steuern ohne viel Lernen und Coden.
 						
 							#include "Arduino.h"
 							#include "heltec.h"
@@ -43,7 +43,7 @@
 						<section id="Variablen">
 							<h2>Was sind Variablen?</h2>
 							Einfache Daten wie eine Zahl oder ein Text werden als sogenannte (primitive) Variablen erstellt.
-							<br>Mit denen kann das Programm arbeiten.
+							<br>Mit jenen kann das Programm arbeiten.
 
 							int ganzeZahl = 0; //erstellung von ganzeZahl mit dem Wert 0
 							ganzeZahl = ganzeZahl + 1; ///ganzeZahl wird plus 1 gerechnet
@@ -119,7 +119,7 @@
 
 						</section>
 						<section>
-							Dann brauchen wir noch für die 5 Ergebnisse einen Zwischenspeicher und eins für das Gesammtergebnis
+							Dann brauchen wir noch für die 5 Ergebnisse einen Zwischenspeicher und eines für das Gesammtergebnis
 
 							 ...
 							unsigned long ergebnisListe[5]; //für die 5 Zwischenergebnisse
@@ -128,14 +128,14 @@
 						</section>
 						<section>
 							Die Zeit muss aufgezeichnet werden.<br>
-							Dafür brauchen wir nur die Startzeit. <br>
+							Dafür speichern wir nur die Startzeit. <br>
 
 							 ...
 							unsigned long timerStart1 = 0; //hier wird die Startzeit gespeichert
 							 ...
 						</section>
 						<section>
-							Das einzige das Fehlt sind Werte um zu sehen ob das Spiel läuft. <br>
+							Das letzte benötigte: <br>
 							Ein Wahrheitswert (Wahr/falsch) um zu sehen ob das Spiel läuft oder nicht. <br>
 							Und einen Zähler für die 5 Runden.
 
@@ -147,7 +147,7 @@
 				</section>
 				<section data-markdown>
 					<textarea data-template>
-						<h2>Setup()</h2>
+						<h2>Setup( )</h2>
 						<Section>
 							Gesammter Setup Code: 
 							
@@ -174,7 +174,7 @@
 							}
 						</section>
 						<section>
-							in dem wird der Microcontroller gestarted
+							In dem wird der Microcontroller gestarted
 
 							 ...
 							Heltec.begin(true /*DisplayEnable An*/, //Display verwendbar
@@ -213,7 +213,7 @@
 				</section>
 				<section data-markdown>
 					<textarea data-template>
-						<h2>loop()</h2>
+						<h2>loop( )</h2>
 						<Section>
 							<br>
 							Gesammter Loop Code: <br>
@@ -279,7 +279,7 @@
 							 ...
 						</section>
 						<section>
-							Erstmal wird der Inhalt des Bildschirmes gelöscht. <br>
+							Der Inhalt des Bildschirmes wird gelöscht. <br>
 							Dann wird eine Startnachricht geschrieben. <br>
 							Wenn es ein Ergebnis gibt, dann wird es auch angezeigt.
 
@@ -316,7 +316,7 @@
 							}	
 						</section>
 						<section>
-							Mit dieser Abfrage wird überprüft ob die Runden moch Laufen. <br>Sobald 5 runden erreicht würden wird der Test beendet.
+							Mit dieser Abfrage wird überprüft ob die Runden noch Laufen. <br>Sobald 5 Runden fertig sind wird der Test beendet.
 
 							während(zähler < 5) {
 								...
@@ -332,7 +332,7 @@
 							 ...
 						</section>
 						<section>
-							Das Programm warted zwischen 1000 und 5000 Millisekunden (1 bis 5 Sekunden). <br>
+							Das Programm warted zwischen 1000 und 5000 Millisekunden. (1 bis 5 Sekunden) <br>
 							Anschließend wird das Weiße licht angeschalten und der Test vorbereitet. <br>
 							In den Timer wird die Startzeit eingespeichert.
 
@@ -345,14 +345,15 @@
 						</section>
 						<section>
 							Dies ist für einen Testlauf. <br>
-							Wenn der Test erfogreich vorbereitet wurde geht es weiter
+							Wenn der Test erfogreich vorbereitet wurde geht es weiter.
 
 							während(spielLäuft) {
 								...
 							}
 						</section>
 						<section>
-							Ein Test wurde erfolgreich gestarted und erstmal wird dem Menschen gezeigt welcher Versuch und wie viel Zeit bisher vergangen ist
+							Ein Test wurde erfolgreich gestarted. <br>
+							Dem Menschen wird gezeigt welcher Versuch und wie viel Zeit bisher vergangen ist.
 
 							 ...
 							Heltec.display->clear();
@@ -364,8 +365,8 @@
 							 ...
 						</section>
 						<section>
-							Sobald der Mensch nun den Button drückt wird das beenden eingeleited. <br>
-							Es muss am abschluss noch ein wenig berechnet werden.
+							Sobald der Mensch nun den Button drückt wird das Beenden eingeleited. <br>
+							Es muss am Abschluss noch ein wenig berechnet werden.
 
 							wenn(digitalRead(pushButton) == 0) {
 								...
@@ -405,7 +406,7 @@
 							}
 						</section>
 						<section>
-							Hier kommt das Programm hin sobald ein Test geglückt ist. <br>
+							Hier kommt das Programm hin sobald eine Runde geglückt ist. <br>
 							Es wird 1 Sekunde Zeit gegeben das Ergebnis anzusehen und dann gespeichert, dass es in die nächste Runde geht. <br>
 							'++' sagt aus, dass +1 gezählt wird.
 
@@ -415,8 +416,8 @@
 							 ...
 						</section>
 						<section>
-							Sobald 5 Runden durch sind wird der Zägler zurückgesetzt und das Ergebnis ausgerechnet. <br>
-							Das Ergebnis ist (alle 5 ergebnisse plus) geteilt durch 5.
+							Sobald 5 Runden durch sind wird der Zähler zurückgesetzt und das Ergebnis ausgerechnet. <br>
+							Das Ergebnis ist: <br>(alle 5 Ergebnisse plus gerechnet) geteilt durch 5.
 
 							 ...
 							zähler = 0;
@@ -462,6 +463,10 @@
 							}
 						</Section>
 					</textarea>
+				</section>
+				<section>
+					Danke für ihre Aufmerksamkeit <br>
+					Dies war ein Projekt der Klasse IT 20/1
 				</section>
 			</div>
 		</div>
