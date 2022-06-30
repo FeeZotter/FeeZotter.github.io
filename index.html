@@ -434,34 +434,29 @@
 							für immer() {
 								SAGE "Drücke PRG zum Starten";
 								wenn(es bereits eine Runde gegeben hat) {
-									SAGE "durchschnittliche Zeit: " + Durchschnittszeit;
+									SAGE "durchschnittliche Zeit: " + durchschnitt;
 								}
 								wenn(Mensch den Button gedrückt hat)
 								{
 									während(noch Ergebnisse gesammelt werden)
 									{
 										SAGE "drücke bei weißer LED";
-										warte(zufällig(1000, 5000)); 
+										warze zwischen 1 & 5 Sekunden;
 										schalte Lampe an;
 										speicher Startpunkt
 										während(spielLäuft)
 										{
-											Heltec.display->clear();
-											Heltec.display->drawString(0,0, "Versuch " + String(zähler+1));
-											Heltec.display->drawString(0,20, String(millis() - timerStart1));
-											Heltec.display->display();
-											wenn(digitalRead(pushButton) == 0)
+											SAGE "Versuch: " + versuchZahl;
+											SAGE dieVergangeneZeit;
+											wenn(der Mensch reagiert hat)
 											{
-												spielLäuft = false;
-												ergebnisListe[zähler] = millis() - timerStart1;
-												digitalWrite(25, 0);  // schaltet die Lampe aus
+												speicher dieVergangeneZeit in eine ergebnisListe;
+												schalte Licht aus;
 											}  
 										}
-										warte(1000);
-										zähler++;
+										warte eine Sekunde;
 									}
-									zähler = 0;
-									durchschnitt = (ergebnisListe[0] + ergebnisListe[1] + ergebnisListe[2] + ergebnisListe[3] + ergebnisListe[4])/5;
+									bereche aus der ergebnisListe den durchschnitt;
 								}
 							  }
 						</Section>
