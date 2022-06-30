@@ -217,7 +217,8 @@
 						<Section>
 							<br>
 							Gesammter Loop Code: <br>
-							Empfehlug: mit Microcontroller lernen
+							Empfehlug: mit Microcontroller lernen <br>
+							Nächste minimierter "Pseudocode"
 							
 							void loop() {
 								// lese den Button
@@ -231,33 +232,33 @@
 								//hier started der Reaktionstest
 								wenn(buttonState == 0)
 								{
-								  während(zähler < 5)
-								  {
-									Heltec.display->clear();
-									Heltec.display->drawString(0,0, "drücke bei weißer LED");
-									Heltec.display->display();
-									warte(zufällig(1000, 5000)); 
-									digitalWrite(25, 1);  // schaltet das Lämpchen an
-									spielLäuft = true;
-									timerStart1 = millis();
-									während(spielLäuft)
+									während(zähler < 5)
 									{
-									  Heltec.display->clear();
-									  Heltec.display->drawString(0,0, "Versuch " + String(zähler+1));
-									  Heltec.display->drawString(0,20, String(millis() - timerStart1));
-									  Heltec.display->display();
-									  wenn(digitalRead(pushButton) == 0)
-									  {
-										spielLäuft = false;
-										ergebnisListe[zähler] = millis() - timerStart1;
-										digitalWrite(25, 0);  // schaltet die Lampe aus
-									  }  
+										Heltec.display->clear();
+										Heltec.display->drawString(0,0, "drücke bei weißer LED");
+										Heltec.display->display();
+										warte(zufällig(1000, 5000)); 
+										digitalWrite(25, 1);  // schaltet das Lämpchen an
+										spielLäuft = true;
+										timerStart1 = millis();
+										während(spielLäuft)
+										{
+											Heltec.display->clear();
+											Heltec.display->drawString(0,0, "Versuch " + String(zähler+1));
+											Heltec.display->drawString(0,20, String(millis() - timerStart1));
+											Heltec.display->display();
+											wenn(digitalRead(pushButton) == 0)
+											{
+												spielLäuft = false;
+												ergebnisListe[zähler] = millis() - timerStart1;
+												digitalWrite(25, 0);  // schaltet die Lampe aus
+											}  
+										}
+										warte(1000);
+										zähler++;
 									}
-									warte(1000);
-									zähler++;
-								  }
-								  zähler = 0;
-								  durchschnitt = (ergebnisListe[0] + ergebnisListe[1] + ergebnisListe[2] + ergebnisListe[3] + ergebnisListe[4])/5;
+									zähler = 0;
+									durchschnitt = (ergebnisListe[0] + ergebnisListe[1] + ergebnisListe[2] + ergebnisListe[3] + ergebnisListe[4])/5;
 								}
 							  }
 						</Section>
@@ -379,31 +380,33 @@
 							 ...
 						</section>
 						<section>
-							Rückblick: (einfache Fassung)
+							einfacher Rückblick:
 
 							//so lange keine 5 Runden vergangen sind
-							während(zähler < 5)
+
+							SAGE "drücke bei weißer LED");
+							warte(zufällig(1000, 5000)); 
+							schalte Lampe ein;
+							spielLäuft = ja;
+							Startpunkt wird gespeichert;
+							während(spielLäuft)
 							{
-							  SAGE "drücke bei weißer LED");
-							  warte(zufällig(1000, 5000)); 
-							  Schalte Lampe ein;
-							  spielLäuft = true;
-							  Startpunkt wird gespeichert;
-							  während(spielLäuft)
-							  {
 								SAGE "Versuch " + String(zähler+1);
-								Heltec.display->drawString(0,20, String(millis() - timerStart1));
-								Heltec.display->display();
-								wenn(digitalRead(pushButton) == 0)
+								//die vergangene Zeit
+								SAGE String(millis() - timerStart1));
+								wenn(Button gedrückt)
 								{
-								  spielLäuft = false;
-								  ergebnisListe[zähler] = millis() - timerStart1;
-								  digitalWrite(25, 0);  // schaltet die Lampe aus
+									spielLäuft = nein;
+									//füge das Ergebnis der Liste hinzu
+									ergebnisListe[zähler] = millis() - timerStart1;
+									schalte Lampe aus;
 								}  
-							  }
+							}
 						</section>
 						<section>
-							Hier kommt das Programm hin sobald die 5 durchläufe geglückt sind.
+							Hier kommt das Programm hin sobald ein Test geglückt ist. <br>
+							Es wird 1 Sekunde Zeit gegeben das Ergebnis anzusehen und dann gespeichert, dass es in die nächste Runde geht. <br>
+							'++' sagt aus, dass +1 gezählt wird.
 
 							 ...
 							warte(1000);
@@ -411,14 +414,57 @@
 							 ...
 						</section>
 						<section>
-							DISCLAIMER: wenn dieser Text hier noch steht war ich nicht schnell genug
-							<br>Für Erklärung bitte an die Schüler wenden
+							Sobald 5 Runden durch sind wird der Zägler zurückgesetzt und das Ergebnis ausgerechnet. <br>
+							Das Ergebnis ist (alle 5 ergebnisse plus) geteilt durch 5 
 
 							 ...
 							zähler = 0;
 							durchschnitt = (ergebnisListe[0] + ergebnisListe[1] + ergebnisListe[2] + ergebnisListe[3] + ergebnisListe[4])/5;
 							 ...
 						</section>
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						<Section>
+							<br>
+							Pseudocode von loop(): <br>
+							Empfehlug: mit Microcontroller lernen <br>
+							
+							für immer() {
+								SAGE "Drücke PRG zum Starten";
+								wenn(es bereits eine Runde gegeben hat) {
+									SAGE "durchschnittliche Zeit: " + Durchschnittszeit;
+								}
+								wenn(Mensch den Button gedrückt hat)
+								{
+									während(noch Ergebnisse gesammelt werden)
+									{
+										SAGE "drücke bei weißer LED";
+										warte(zufällig(1000, 5000)); 
+										schalte Lampe an;
+										speicher Startpunkt
+										während(spielLäuft)
+										{
+											Heltec.display->clear();
+											Heltec.display->drawString(0,0, "Versuch " + String(zähler+1));
+											Heltec.display->drawString(0,20, String(millis() - timerStart1));
+											Heltec.display->display();
+											wenn(digitalRead(pushButton) == 0)
+											{
+												spielLäuft = false;
+												ergebnisListe[zähler] = millis() - timerStart1;
+												digitalWrite(25, 0);  // schaltet die Lampe aus
+											}  
+										}
+										warte(1000);
+										zähler++;
+									}
+									zähler = 0;
+									durchschnitt = (ergebnisListe[0] + ergebnisListe[1] + ergebnisListe[2] + ergebnisListe[3] + ergebnisListe[4])/5;
+								}
+							  }
+						</Section>
 					</textarea>
 				</section>
 			</div>
