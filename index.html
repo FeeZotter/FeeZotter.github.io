@@ -217,50 +217,50 @@
 						<Section>
 							<br>
 							Gesammter Loop Code: <br>
-							Empfehlug: mit Microcontroller lernen <br>
-							Nächste minimierter "Pseudocode"
+							Empfehlug: mit Microcontroller lernen
 							
+
 							void loop() {
-								// lese den Button
-								int buttonState = digitalRead(pushButton);
-								Heltec.display->clear();
-								Heltec.display->drawString(0,0,"Drücke PRG zum Starten");
-								wenn(durchschnitt != 0) {
-									Heltec.display->drawString(0,20, "durchschnittliche Zeit: " + String(durchschnitt));
-								}
-								Heltec.display->display();
-								//hier started der Reaktionstest
-								wenn(buttonState == 0)
-								{
-									während(zähler < 5)
-									{
-										Heltec.display->clear();
-										Heltec.display->drawString(0,0, "drücke bei weißer LED");
-										Heltec.display->display();
-										warte(zufällig(1000, 5000)); 
-										digitalWrite(25, 1);  // schaltet das Lämpchen an
-										spielLäuft = true;
-										timerStart1 = millis();
-										während(spielLäuft)
-										{
-											Heltec.display->clear();
-											Heltec.display->drawString(0,0, "Versuch " + String(zähler+1));
-											Heltec.display->drawString(0,20, String(millis() - timerStart1));
-											Heltec.display->display();
-											wenn(digitalRead(pushButton) == 0)
-											{
-												spielLäuft = false;
-												ergebnisListe[zähler] = millis() - timerStart1;
-												digitalWrite(25, 0);  // schaltet die Lampe aus
-											}  
-										}
-										warte(1000);
-										zähler++;
-									}
-									zähler = 0;
-									durchschnitt = (ergebnisListe[0] + ergebnisListe[1] + ergebnisListe[2] + ergebnisListe[3] + ergebnisListe[4])/5;
-								}
+							  // lese den Button
+							  int buttonState = digitalRead(pushButton);
+							  Heltec.display->clear();
+							  Heltec.display->drawString(0,0,"Drücke PRG zum Starten");
+							  wenn(durchschnitt != 0) {
+								Heltec.display->drawString(0,20, "durchschnittliche Zeit: " + String(durchschnitt));
 							  }
+							  Heltec.display->display();
+							  //hier started der Reaktionstest
+							  wenn(buttonState == 0)
+							  {
+								während(zähler < 5)
+								{
+							 	  Heltec.display->clear();
+								  Heltec.display->drawString(0,0, "drücke bei weißer LED");
+								  Heltec.display->display();
+								  warte(zufällig(1000, 5000)); 
+								  digitalWrite(25, 1);  // schaltet das Lämpchen an
+								  spielLäuft = true;
+								  timerStart1 = millis();
+								  während(spielLäuft)
+								  {
+								    Heltec.display->clear();
+								    Heltec.display->drawString(0,0, "Versuch " + String(zähler+1));
+								    Heltec.display->drawString(0,20, String(millis() - timerStart1));
+									Heltec.display->display();
+									wenn(digitalRead(pushButton) == 0)
+									{
+								      spielLäuft = false;
+									  ergebnisListe[zähler] = millis() - timerStart1;
+									  digitalWrite(25, 0);  // schaltet die Lampe aus
+									}  
+								  }
+								  warte(1000);
+								  zähler++;
+								}
+								zähler = 0;
+								durchschnitt = (ergebnisListe[0] + ergebnisListe[1] + ergebnisListe[2] + ergebnisListe[3] + ergebnisListe[4])/5;
+							}
+							}
 						</Section>
 						<section>
 							Natürlich brauchen wir erstmal einen Platz für das dauerhaft laufende Programm
@@ -296,6 +296,7 @@
 							Rückblick:
 							Der Button wird gelesen und der Startbildschirm angezeigt
 
+							 ...
 							// lese den Button
 							int buttonState = digitalRead(pushButton);
 							Heltec.display->clear();
@@ -304,6 +305,7 @@
 								Heltec.display->drawString(0,20, "durchschnittliche Zeit: " + String(durchschnitt));
 							}
 							Heltec.display->display();
+							 ...
 						</section>
 						<section>
 							Wenn der Button gedrückt wurde started der Test
@@ -356,7 +358,7 @@
 							Heltec.display->clear();
 							//+1 weil Listen mit 0 beginnen, aber Menschen denken es beginne mit 1
 							Heltec.display->drawString(0,0, "Versuch " + String(zähler+1)); 
-							// ZeitJetzt(millis()) minus timerStart1 ist die bisher vergangene Zeit
+							//ZeitJetzt(millis()) minus timerStart1 ist die bisher vergangene Zeit
 							Heltec.display->drawString(0,20, String(millis() - timerStart1));
 							Heltec.display->display();
 							 ...
@@ -383,7 +385,6 @@
 							einfacher Rückblick:
 
 							//so lange keine 5 Runden vergangen sind
-
 							SAGE "drücke bei weißer LED");
 							warte(zufällig(1000, 5000)); 
 							schalte Lampe ein;
@@ -415,7 +416,7 @@
 						</section>
 						<section>
 							Sobald 5 Runden durch sind wird der Zägler zurückgesetzt und das Ergebnis ausgerechnet. <br>
-							Das Ergebnis ist (alle 5 ergebnisse plus) geteilt durch 5 
+							Das Ergebnis ist (alle 5 ergebnisse plus) geteilt durch 5.
 
 							 ...
 							zähler = 0;
@@ -432,33 +433,33 @@
 							Empfehlug: mit Microcontroller lernen <br>
 							
 							für immer() {
-								SAGE "Drücke PRG zum Starten";
-								wenn(es bereits eine Runde gegeben hat) {
-									SAGE "durchschnittliche Zeit: " + durchschnitt;
-								}
-								wenn(Mensch den Button gedrückt hat)
-								{
-									während(noch Ergebnisse gesammelt werden)
-									{
-										SAGE "drücke bei weißer LED";
-										warze zwischen 1 & 5 Sekunden;
-										schalte Lampe an;
-										speicher Startpunkt
-										während(spielLäuft)
-										{
-											SAGE "Versuch: " + versuchZahl;
-											SAGE dieVergangeneZeit;
-											wenn(der Mensch reagiert hat)
-											{
-												speicher dieVergangeneZeit in eine ergebnisListe;
-												schalte Licht aus;
-											}  
-										}
-										warte eine Sekunde;
-									}
-									bereche aus der ergebnisListe den durchschnitt;
-								}
+							  SAGE "Drücke PRG zum Starten";
+							  wenn(es bereits eine Runde gegeben hat) {
+								SAGE "durchschnittliche Zeit: " + durchschnitt;
 							  }
+							  wenn(Mensch den Button gedrückt hat)
+							  {
+								während(noch Ergebnisse gesammelt werden)
+								{
+								  SAGE "drücke bei weißer LED";
+								  warze zwischen 1 & 5 Sekunden;
+								  schalte Lampe an;
+								  speicher Startpunkt
+								  während(spielLäuft)
+								  {
+									SAGE "Versuch: " + versuchZahl;
+									SAGE dieVergangeneZeit;
+									wenn(der Mensch reagiert hat)
+									{
+									  speicher dieVergangeneZeit in eine ergebnisListe;
+									  schalte Licht aus;
+									}  
+								  }
+								  warte eine Sekunde;
+							 	}
+								bereche aus der ergebnisListe den durchschnitt;
+							  }
+							}
 						</Section>
 					</textarea>
 				</section>
