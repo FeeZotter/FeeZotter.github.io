@@ -5,9 +5,7 @@ import HelloWorld from "/test.vue";
 </script>
 
 <template>
-  <div>
-    <HelloWorld msg="index" />
-  </div>
+
 </template>
 
 <style>
@@ -18,5 +16,10 @@ import HelloWorld from "/test.vue";
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+.vignette {
+  max-width: 60px;
+  max-height: 60px;
+    margin-right: 4%;
 }
 </style>
