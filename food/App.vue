@@ -5,7 +5,7 @@ import HelloWorld from "/test.vue";
 </script>
 
 <template>
-
+    <HelloWorld />
 </template>
 
 <style>
