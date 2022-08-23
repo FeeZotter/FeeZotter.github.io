@@ -1,0 +1,497 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>30.06.2022</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/custom.css">
+		<link rel="stylesheet" href="dist/theme/white.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section data-markdown>
+					<textarea data-template>
+						<section>
+							<h2>Reaktionsmesser Code</h2>
+							Navigiere mit ⇚ ⤊ ⟱ ⇛ und ⎵
+					  	</section>
+					  	<section>
+							Auf den folgenden Folien wird der Code Schritt für schritt erklärt <br><br>
+							ESC ⇛ übersichtliche Karte <br>
+							V ⇛ Pause
+						</section>
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						<section data-markdown id="Importe">
+							<h2>Was sind Importe?</h2>
+							Importe erweitern die verfügbaren Funktionen des Programmes um schnellere und einfachere Lösungen zu bieten.
+							<br>Durch "Arduino.h" können wir einfach den Bildschirm steuern ohne viel Lernen und Coden.
+						
+							#include "Arduino.h"
+							#include "heltec.h"
+						</section>
+						<section id="Variablen">
+							<h2>Was sind Variablen?</h2>
+							Einfache Daten wie eine Zahl oder ein Text werden als sogenannte (primitive) Variablen erstellt.
+							<br>Mit jenen kann das Programm arbeiten.
+
+							int ganzeZahl = 0; //erstellung von ganzeZahl mit dem Wert 0
+							ganzeZahl = ganzeZahl + 1; ///ganzeZahl wird plus 1 gerechnet
+							>>Ausgabe von ganzeZahl ist 1
+						</section>
+						<section id="Setup">
+							<h2>Was ist setup()?</h2>
+							Hier wird das Programm EINMAL AM ANFANG vorbereitet.<br>
+							In die runden Klammern werden benötigte Variablen eingetragen.
+							<br>In den geschweiften Klammern ist der zurehörige Code drin.
+							
+							void setup(ganzeZahl) { //setup beginnt und benötigt eine Zahl
+								Heltec.begin(); //System started
+								Heltec.display->setFont(ArialMT_Plain_10); //Schriftart
+								Heltec.display->draw(0, 0, ganzeZahl); //zeichne ganzeZahl
+								Heltec.display->display(); //aktualisiere den Bildschirm
+							}
+
+						</section>
+						<section id="Loop">
+							<h2>Was ist loop()?</h2>
+							Hier wird Code so lange ausgeführt bis das System abgeschalten ist.<br>
+							Auch hier kommen Variablen in die runden Klammern und der Code in die geschweiften.
+
+							void loop() {
+								int buttonStatus = digitalRead(pushButton); //Status des Buttons
+								wenn(buttonStatus == 0) { //wird der Button gedrückt?
+									beginneSpiel();
+								}
+								wenn nicht {
+									//nichts warte weiter bis der Button gedrückt wird
+								}
+							}
+						</section>
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						## Importe
+
+						Wir benötigen die Arduino Bibliothek, da das ein Microcontroller auf der Basis von Arduino ist
+						```
+						#include "Arduino.h"
+						```
+						
+						Die Heltec Bibliothek benötigen wir um auf die Systemzeit, den Bildschirm und das Gerät selbst zugreifen zu können
+						```
+						#include "heltec.h"
+						```
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						<h2>Variablen</h2>
+						<Section>
+							Gesammter Variablen Code: 
+							
+							int pushButton = 0; //Button zum Überwachen
+							unsigned long timerStart1 = 0; //hier wird die Startzeit gespeichert
+							bool spielLäuft = true; //hier wird gesehen ob das Spiel läuft
+							unsigned long ergebnisListe[5]; //für die 5 Zwischenergebnisse
+							unsigned long durchschnitt = 0; //hier das Komplettergebnis
+							int zähler = 0; //hier werden die Versuche gezählt
+						</Section>
+						<section>
+							Den Button den wir sehen wollen hat die ID von 0.
+							<br>
+							<br>Also setzen wir im Code eine Variable um die Zahl nicht merken zu müssen oder einfach ändern zu können.
+							<br><br>
+
+							int pushButton = 0; //Button zum Überwachen
+							 ...
+
+						</section>
+						<section>
+							Dann brauchen wir noch für die 5 Ergebnisse einen Zwischenspeicher und eines für das Gesammtergebnis
+
+							 ...
+							unsigned long ergebnisListe[5]; //für die 5 Zwischenergebnisse
+							unsigned long durchschnitt = 0; //hier das Komplettergebnis
+							 ...
+						</section>
+						<section>
+							Die Zeit muss aufgezeichnet werden.<br>
+							Dafür speichern wir nur die Startzeit. <br>
+
+							 ...
+							unsigned long timerStart1 = 0; //hier wird die Startzeit gespeichert
+							 ...
+						</section>
+						<section>
+							Das letzte benötigte: <br>
+							Ein Wahrheitswert (Wahr/falsch) um zu sehen ob das Spiel läuft oder nicht. <br>
+							Und einen Zähler für die 5 Runden.
+
+							 ...
+							bool spielLäuft = true; //hier wird gesehen ob das Spiel läuft
+							int zähler = 0; //hier werden die Versuche gezählt
+						</section>
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						<h2>Setup( )</h2>
+						<Section>
+							Gesammter Setup Code: 
+							
+							void setup() {
+								//Starte den Microcontroller
+								Heltec.begin(true /*DisplayEnable An*/, //Display verwendbar
+											false /*LoRa Aus*/, 
+											true /*Serial An*/); //Meldungen für Fehlerbehebung
+								Heltec.display->init(); //Starte den Bildschirm
+								Heltec.display->setFont(ArialMT_Plain_10); //Schriftart
+								//Schreibe "Hallo Welt"
+								Heltec.display->drawString(0, 0, "Hallo Welt");
+								Heltec.display->display(); //aktualisiere den Bildschirm
+								//setze den Anschluss pushButton als Eingang
+								pinMode(pushButton, EINGANG); 
+								pinMode(25, AUSGANG); //setze den Anschluss 25 als Ausgang
+							}
+						</Section>
+						<section>
+							Erstmal muss es ein Ort für den erstmalig ausgeführten Code geben
+
+							void setup() {
+							 ...
+							}
+						</section>
+						<section>
+							In dem wird der Microcontroller gestarted
+
+							 ...
+							Heltec.begin(true /*DisplayEnable An*/, //Display verwendbar
+										false /*LoRa Aus*/, 
+										true /*Serial An*/); //Meldungen für Fehlerbehebung
+							 ...
+						</section>
+						<section>
+							Das Display wird aktiviert und die Schriftart festgelegt
+
+							 ...
+							Heltec.display->init(); //Starte den Bildschirm
+							Heltec.display->setFont(ArialMT_Plain_10); //Schriftart
+							 ...
+						</section>
+						<section>
+							Die erste Nutzung des Bildschirms zum testen. <br>
+							Dabei wird erst vorgegeben, was gemacht werden soll und in der nächsten Zeile der Bildschirm aktualisiert.
+
+							 ...
+							//Schreibe "Hallo Welt"
+							Heltec.display->drawString(0, 0, "Hallo Welt");
+							Heltec.display->display(); //aktualisiere den Bildschirm
+							 ...
+						</section>
+						<section>
+							Mit pinMode() wird ein Anschluss angeschalten und als Eingang oder Ausgang gesetzt.
+							<br>'pushButton' hat als Variable den Wert 0, also wird der Anschluss 0 als Eingang gesetzt.
+							
+							 ...
+							//setze den Anschluss pushButton als Eingang
+							pinMode(pushButton, EINGANG); 
+							pinMode(25, AUSGANG); //setze den Anschluss 25 als Ausgang
+						</section>
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						<h2>loop( )</h2>
+						<Section>
+							<br>
+							Gesammter Loop Code: <br>
+							Empfehlug: mit Microcontroller lernen
+							
+
+							void loop() {
+							  // lese den Button
+							  int buttonState = digitalRead(pushButton);
+							  Heltec.display->clear();
+							  Heltec.display->drawString(0,0,"Drücke PRG zum Starten");
+							  wenn(durchschnitt != 0) {
+								Heltec.display->drawString(0,20, "durchschnittliche Zeit: " + String(durchschnitt));
+							  }
+							  Heltec.display->display();
+							  //hier started der Reaktionstest
+							  wenn(buttonState == 0)
+							  {
+								während(zähler < 5)
+								{
+							 	  Heltec.display->clear();
+								  Heltec.display->drawString(0,0, "drücke bei weißer LED");
+								  Heltec.display->display();
+								  warte(zufällig(1000, 5000)); 
+								  digitalWrite(25, 1);  // schaltet das Lämpchen an
+								  spielLäuft = true;
+								  timerStart1 = millis();
+								  während(spielLäuft)
+								  {
+								    Heltec.display->clear();
+								    Heltec.display->drawString(0,0, "Versuch " + String(zähler+1));
+								    Heltec.display->drawString(0,20, String(millis() - timerStart1));
+									Heltec.display->display();
+									wenn(digitalRead(pushButton) == 0)
+									{
+								      spielLäuft = false;
+									  ergebnisListe[zähler] = millis() - timerStart1;
+									  digitalWrite(25, 0);  // schaltet die Lampe aus
+									}  
+								  }
+								  warte(1000);
+								  zähler++;
+								}
+								zähler = 0;
+								durchschnitt = (ergebnisListe[0] + ergebnisListe[1] + ergebnisListe[2] + ergebnisListe[3] + ergebnisListe[4])/5;
+							}
+							}
+						</Section>
+						<section>
+							Natürlich brauchen wir erstmal einen Platz für das dauerhaft laufende Programm
+
+							void loop() {
+								...
+							}
+						</section>
+						<section>
+							Als erste Aktion bei einer Wiederholung muss überprüft werden, ob der Button gedrückt wird.
+							<br>Damit wird gesehen ob der Mensch etwas will.
+
+							 ...
+							// lese den Button
+							int buttonState = digitalRead(pushButton);
+							 ...
+						</section>
+						<section>
+							Der Inhalt des Bildschirmes wird gelöscht. <br>
+							Dann wird eine Startnachricht geschrieben. <br>
+							Wenn es ein Ergebnis gibt, dann wird es auch angezeigt.
+
+							 ...
+							Heltec.display->clear();
+							Heltec.display->drawString(0,0,"Drücke PRG zum Starten");
+							wenn(durchschnitt != 0) {
+								Heltec.display->drawString(0,20, "durchschnittliche Zeit: " + String(durchschnitt));
+							}
+							Heltec.display->display();
+							 ...
+						</section>
+						<section>
+							Rückblick:
+							Der Button wird gelesen und der Startbildschirm angezeigt
+
+							 ...
+							// lese den Button
+							int buttonState = digitalRead(pushButton);
+							Heltec.display->clear();
+							Heltec.display->drawString(0,0,"Drücke PRG zum Starten");
+							wenn(durchschnitt != 0) {
+								Heltec.display->drawString(0,20, "durchschnittliche Zeit: " + String(durchschnitt));
+							}
+							Heltec.display->display();
+							 ...
+						</section>
+						<section>
+							Wenn der Button gedrückt wurde started der Test
+							
+							//hier started der Reaktionstest
+							wenn(buttonState == 0) {
+								...
+							}	
+						</section>
+						<section>
+							Mit dieser Abfrage wird überprüft ob die Runden noch Laufen. <br>Sobald 5 Runden fertig sind wird der Test beendet.
+
+							während(zähler < 5) {
+								...
+							}
+						</section>
+						<section>
+							Die Anzeige wird mit einer Aufforderung aktualisiert
+
+							 ...
+							Heltec.display->clear();
+							Heltec.display->drawString(0,0, "drücke bei weißer LED");
+							Heltec.display->display();
+							 ...
+						</section>
+						<section>
+							Das Programm warted zwischen 1000 und 5000 Millisekunden. (1 bis 5 Sekunden) <br>
+							Anschließend wird das Weiße licht angeschalten und der Test vorbereitet. <br>
+							In den Timer wird die Startzeit eingespeichert.
+
+							 ...
+							warte(zufällig(1000, 5000)); 
+							digitalWrite(25, 1);  // schaltet das Lämpchen an
+							spielLäuft = true;
+							timerStart1 = millis();
+							 ...
+						</section>
+						<section>
+							Dies ist für einen Testlauf. <br>
+							Wenn der Test erfogreich vorbereitet wurde geht es weiter.
+
+							während(spielLäuft) {
+								...
+							}
+						</section>
+						<section>
+							Ein Test wurde erfolgreich gestarted. <br>
+							Dem Menschen wird gezeigt welcher Versuch und wie viel Zeit bisher vergangen ist.
+
+							 ...
+							Heltec.display->clear();
+							//+1 weil Listen mit 0 beginnen, aber Menschen denken es beginne mit 1
+							Heltec.display->drawString(0,0, "Versuch " + String(zähler+1)); 
+							//ZeitJetzt(millis()) minus timerStart1 ist die bisher vergangene Zeit
+							Heltec.display->drawString(0,20, String(millis() - timerStart1));
+							Heltec.display->display();
+							 ...
+						</section>
+						<section>
+							Sobald der Mensch nun den Button drückt wird das Beenden eingeleited. <br>
+							Es muss am Abschluss noch ein wenig berechnet werden.
+
+							wenn(digitalRead(pushButton) == 0) {
+								...
+							}
+						</section>
+						<section>
+							Das Testende wird gesetzt, die vergangene Zeit eingespeichert und das Licht ausgemacht.
+
+							 ...
+							//Test ist zu ende
+							spielLäuft = false;
+							ergebnisListe[zähler] = millis() - timerStart1;
+							digitalWrite(25, 0);  // schaltet die Lampe aus
+							 ...
+						</section>
+						<section>
+							einfacher Rückblick:
+
+							//so lange keine 5 Runden vergangen sind
+							SAGE "drücke bei weißer LED");
+							warte(zufällig(1000, 5000)); 
+							schalte Lampe ein;
+							spielLäuft = ja;
+							Startpunkt wird gespeichert;
+							während(spielLäuft)
+							{
+								SAGE "Versuch " + String(zähler+1);
+								//die vergangene Zeit
+								SAGE String(millis() - timerStart1));
+								wenn(Button gedrückt)
+								{
+									spielLäuft = nein;
+									//füge das Ergebnis der Liste hinzu
+									ergebnisListe[zähler] = millis() - timerStart1;
+									schalte Lampe aus;
+								}  
+							}
+						</section>
+						<section>
+							Hier kommt das Programm hin sobald eine Runde geglückt ist. <br>
+							Es wird 1 Sekunde Zeit gegeben das Ergebnis anzusehen und dann gespeichert, dass es in die nächste Runde geht. <br>
+							'++' sagt aus, dass +1 gezählt wird.
+
+							 ...
+							warte(1000);
+							zähler++;
+							 ...
+						</section>
+						<section>
+							Sobald 5 Runden durch sind wird der Zähler zurückgesetzt und das Ergebnis ausgerechnet. <br>
+							Das Ergebnis ist: <br>(alle 5 Ergebnisse plus gerechnet) geteilt durch 5.
+
+							 ...
+							zähler = 0;
+							durchschnitt = (ergebnisListe[0] + ergebnisListe[1] + ergebnisListe[2] + ergebnisListe[3] + ergebnisListe[4])/5;
+							 ...
+						</section>
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						<Section>
+							<br>
+							Pseudocode von loop(): <br>
+							Empfehlug: mit Microcontroller lernen <br>
+							
+							für immer() {
+							  SAGE "Drücke PRG zum Starten";
+							  wenn(es bereits eine Runde gegeben hat) {
+								SAGE "durchschnittliche Zeit: " + durchschnitt;
+							  }
+							  wenn(Mensch den Button gedrückt hat)
+							  {
+								während(noch Ergebnisse gesammelt werden)
+								{
+								  SAGE "drücke bei weißer LED";
+								  warze zwischen 1 & 5 Sekunden;
+								  schalte Lampe an;
+								  speicher Startpunkt
+								  während(spielLäuft)
+								  {
+									SAGE "Versuch: " + versuchZahl;
+									SAGE dieVergangeneZeit;
+									wenn(der Mensch reagiert hat)
+									{
+									  speicher dieVergangeneZeit in eine ergebnisListe;
+									  schalte Licht aus;
+									}  
+								  }
+								  warte eine Sekunde;
+							 	}
+								bereche aus der ergebnisListe den durchschnitt;
+							  }
+							}
+						</Section>
+					</textarea>
+				</section>
+				<section>
+					Danke für ihre Aufmerksamkeit <br>
+					Dies war ein Projekt der Klasse IT 20/1 <br>
+					<p class="fragment fade-up">C.Hinze, T.Mundt, R.Raya, S.Schulze, S.Stasik, R.Sternberg, B.Werth & F.Zotter</p>
+				</section>
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+				slideNumber: true,
+				loop: true,
+				autoSlide: 10000,
+				mouseWheel: false,
+				transition: 'convex', // none/fade/slide/convex/concave/zoom
+				transitionSpeed: 'slow', // default/fast/slow
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
+</html>
