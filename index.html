@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <title>Score Game Tracker</title>
+    <link rel='stylesheet' type='text/css' media='screen' href='style.css'>
+    <style>
+        /* Style the tab */
+        .tab {
+            overflow: hidden;
+            border: 1px solid #ccc;
+            background-color: #f1f1f1;
+        }
+
+        /* Style the buttons that are used to open the tab content */
+        .tab button {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 10px 10px;
+            transition: 0.3s;
+        }
+
+        /* Change background color of buttons on hover */
+        .tab button:hover {
+            background-color: #ddd;
+        }
+
+        /* Create an active/current tablink class */
+        .tab button.active {
+            background-color: #ccc;
+        }
+
+        /* Style the tab content */
+        .tabcontent {
+            display: none;
+            padding: 6px 6px;
+            border: 1px solid #ccc;
+            border-top: none;
+        }
+
+        td,
+        th {
+            border: 1px solid #ddd;
+            padding: 1px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #ddd;
+        }
+
+        .redbutton {
+background-color: rgb(255, 72, 72); position: fixed; bottom: 0; left: 0px;
+        }
+    </style>
+</head>
+<body>
+    <div id="main_menu">
+        <input type="text" name="input_player_name" id="input_player_name" autofocus placeholder="YOUR NAME">
+        <input type="button" value="add player" onclick="addplayer()">
+        <input type="button" id="button_random_player" value="+🎲 player" onclick="addrandomplayer()">
+        <button id="button_game_start" onclick="start()">START</button>
+        <p>Player List</p>
+        <ul id="ul_player"></ul>
+        <button id="button_delete_players" onclick="deletePlayers()" class="redbutton">Delete Players</button>
+    </div>
+    <div id="tabs" hidden>
+        <div class="tab">
+            <button class="tablinks" id="game_tab_btn" onclick="openTab(event, 'tab_game')">Game</button>
+            <button class="tablinks" id="total_score_btn" onclick="openTab(event, 'tab_score')">Total Score</Script>
+            </button>
+        </div>
+        <div id="tab_game" class="tabcontent">
+            <table>
+                <tbody id="game_player_score_display">
+                    <tr id="game_player_display">
+                    </tr>
+                    <tr id="game_total_score_display">
+                    </tr>
+                </tbody>
+            </table>
+            <table>
+                <tr>
+                    <th>Round:</th>
+                    <th id="game_current_round"></th>
+                </tr>
+            </table>
+            <br>
+            <form id="form_add_score" action="">
+                <input type="number" name="newscore" id="input_new_score" value="0" maxlength="10">
+                <input type="submit" value="Submit">
+            </form>
+            <button onclick="addRandomScore()" hidden>add random score</button>
+        </div>
+        <div id="tab_score" class="tabcontent">
+            <button id="button_game_restart" onclick="restart()" class="redbutton">RESTART</button>
+            <table>
+                <tbody id="table_score">
+                    <tr id="tr_players"></tr>
+                    <tr id="tr_max_score"></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+<script>
+    document.getElementById("game_tab_btn").click();
+    document.getElementById("form_add_score").addEventListener("submit", function (event) {
+        event.preventDefault();
+        if (!isNaN(event.srcElement[0].valueAsNumber))
+            addScore(event.srcElement[0].valueAsNumber)
+        event.srcElement[0].value = 0
+    });
+    players = []
+    currentRow = 0
+    currentPlayer = 0
+    maxScores = []
+    names = ["Ullafried", "Gnarf", "Goda", "Efa", "Elni", "Kerri", "Frohweg", "Forrson", "Starrix", "Oigerta", "Bubbi", "Sholi", "Zilla", "Silwi", "Dasivan", "Boric", "Hui", "Roven", "Roar", "Cree", "Poggi", "Arni", "Warno", "Gary", "Conny", "Alviss", "Blaed", "Feich", "Diss", "Eamon", "Broth", "Coal", "Conan", "Fridu", "Fips", "Garwig", "Hadu", "Herwig", "Holda", "Hunfrid", "Ingmar", "Itu", "Jeffries", "Jami", "Kief", "Knut", "Krak", "Lonn", "Lokti", "Mab", "Magnus", "Mandel", "Mari", "Monca", "Mirtek", "Naul", "Nichus", "Odbert", "Ordalf", "Osric", "Peppi", "Perin", "Quarz", "Raymir", "Rille", "Rhuk", "Regdar", "Rotland", "Rurik", "Sala", "Saxon", "Sargas", "Scanlan", "Sigiwald", "Sim", "Skypr", "Strom", "Taffy", "Taran", "Temara", "Thoud", "Torm", "Tirell", "Trea", "Tamiel", "Udo", "Unnurr", "Vaasa", "Varvia", "Vychan", "Wace", "Waldramm", "Wolf", "Warto", "Werro", "Yarrik", "Yedda", "Zolt", "Aine", "Alain", "Allsun", "Baldwine", "Brann", "Bridhid", "Conn", "Doire", "Earwine", "Gertrut", "Gisela", "Herthe", "Lidda", "Maible", "Maura", "Mercia", "Rois", "Signi", "Siusan", "Tanya", "Truda", "Walda", "Waldo"]
+    randomNames = []
+    randomNames = names.slice(0)
+    bobNames = ["bob", "Bob", "bOb", "BOb", "boB", "BoB", "bOB", "BOB"]
+    bob = false
+    usedBobnames = 0
+
+    /**
+     * stolen from stack overflow 
+     */
+    function timestampRandom(max) {
+        var seed = Date.now()
+        var x = Math.sin(seed++) * 10000;
+        x -= Math.floor(x);
+        return Math.floor(x * (max++))
+    }
+    if (timestampRandom(100) == 42) {
+        bob = true
+        randomNames = bobNames.slice(0)
+    }
+    shuffleArray(randomNames)
+
+    function addScore(score) {
+        scoreTable = document.getElementById("table_score")
+        maxScores[currentPlayer] += score
+        scoreTable.children[currentRow].children[currentPlayer].textContent = score
+        scoreTable.children[currentRow + 1].children[currentPlayer].textContent = maxScores[currentPlayer]
+        document.getElementById("game_player_display").children[currentPlayer].style = "font-weight: lighter;"
+        document.getElementById("game_total_score_display").children[currentPlayer].style = "font-weight: lighter;"
+        document.getElementById("game_total_score_display").children[currentPlayer].textContent = maxScores[currentPlayer]
+        currentPlayer++;
+        if (currentPlayer >= players.length) {
+            currentPlayer = 0
+            addRow()
+        }
+        document.getElementById("game_player_display").children[currentPlayer].style = "font-weight: bold;"
+        document.getElementById("game_total_score_display").children[currentPlayer].style = "font-weight: bold;"
+    }
+
+    function addRow() {
+        currentRow += 1
+        document.getElementById("game_current_round").textContent = currentRow
+        scoreTable = document.getElementById("table_score")
+        tr = document.createElement("tr")
+        scoreTable.insertBefore(tr, document.getElementById("tr_max_score"))
+        for (let i = 0; i < players.length; i++) {
+            td = document.createElement("td")
+            td.textContent = "-"
+            tr.appendChild(td)
+        }
+    }
+
+    function start() {
+        if (players.length == 0)
+            return;
+        document.getElementById("main_menu").hidden = true
+        document.getElementById("tabs").hidden = false
+        tr = document.getElementById("tr_players")
+        tr_max = document.getElementById("tr_max_score")
+        tr_display = document.getElementById("game_player_display")
+        th_score_display = document.getElementById("game_total_score_display")
+        th_player_display = document.getElementById("game_player_display")
+        players.forEach(player => {
+            th = document.createElement("th")
+            th.innerHTML = player
+            tr.appendChild(th)
+            td = document.createElement("td")
+            td.innerHTML = player
+            td.style = "font-weight: lighter;"
+            td2 = document.createElement("td")
+            td2.innerHTML = 0
+            td2.style = "font-weight: lighter;"
+            th_score_display.appendChild(td2)
+            td3 = document.createElement("td")
+            td3.innerHTML = player
+            td3.style = "font-weight: lighter;"
+            th_player_display.appendChild(td3)
+            th3 = document.createElement("th")
+            tr_max.appendChild(th3)
+            maxScores.push(0)
+        });
+        document.getElementById("game_current_round").textContent = 1
+        document.getElementById("game_player_display").children[0].style = "font-weight: bold;"
+        document.getElementById("game_total_score_display").children[0].style = "font-weight: bold;"
+        document.getElementById("game_player_display").children[0].style = "font-weight: bold;"
+        addRow()
+    }
+
+    function addRandomScore() {
+        addScore(getRandomInt(1000))
+    }
+
+    /**
+     * stolen from w3schools
+     */
+    function openTab(evt, tabName) {
+        // Declare all variables
+        var i, tabcontent, tablinks;
+
+        // Get all elements with class="tabcontent" and hide them
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+
+        // Get all elements with class="tablinks" and remove the class "active"
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+
+        // Show the current tab, and add an "active" class to the button that opened the tab
+        document.getElementById(tabName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+
+    function addplayer() {
+        playerNameInput = document.getElementById("input_player_name")
+        if (playerNameInput.value == "") {
+            console.log("no player name")
+            return
+        }
+        for (let i = 0; i < players.length; i++) {
+            if (players[i] == playerNameInput.value)
+                return
+        }
+        newPlayer = document.createElement("li")
+        playerList = document.getElementById("ul_player")
+        newPlayer.innerHTML = playerNameInput.value
+        players.push(playerNameInput.value)
+        playerList.prepend(newPlayer)
+        playerNameInput.value = ""
+    }
+
+    function addrandomplayer() {
+        if (bob)
+            usedBobnames++;
+        newName = randomNames[0]
+        randomNames.shift()
+        if (bob && usedBobnames == 8) {
+            randomNames = names.slice(0)
+            shuffleArray(randomNames)
+            randomNames.push("Wenis")
+        }
+        newPlayer = document.createElement("li")
+        playerList = document.getElementById("ul_player")
+        newPlayer.innerHTML = newName
+        players.push(newName)
+        playerList.prepend(newPlayer)
+        if (randomNames.length == 0)
+            document.getElementById("button_random_player").disabled = true
+    }
+
+    function restart() {
+        document.getElementById("tabs").hidden = true
+        document.getElementById("main_menu").hidden = false
+        document.getElementById("input_player_name").value = ""
+        document.getElementById("table_score").innerHTML = '<tr id="tr_players"></tr><tr id="tr_max_score"></tr>'
+        document.getElementById("game_player_score_display").innerHTML = ' <tr><th id="game_player_display"></th></tr><tr><th id="game_total_score_display"></th></tr>'
+        currentRow = 0
+        currentPlayer = 0
+        maxScores = []
+    }
+
+    function deletePlayers() {
+        players = []
+        document.getElementById("button_random_player").disabled = false
+        document.getElementById("ul_player").innerHTML = ''
+        if (bob) randomNames = bobNames.slice(0)
+        else randomNames = names.slice(0)
+        shuffleArray(randomNames)
+    }
+
+    /**
+     * stolen from mdn web docs
+     */
+    function getRandomInt(max) {
+        return Math.floor(Math.random() * (max++))
+    }
+
+    /**
+     * stolen from stack overflow 
+     */
+    function shuffleArray(array) {
+        let currentIndex = array.length;
+
+        // While there remain elements to shuffle...
+        while (currentIndex != 0) {
+            // Pick a remaining element...
+            let randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex--;
+            // And swap it with the current element.
+            [array[currentIndex], array[randomIndex]] = [
+                array[randomIndex], array[currentIndex]];
+        }
+    }
+</script>
+</html>
